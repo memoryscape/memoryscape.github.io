@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>HTML 5 Boilerplate</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
   </head>
   <body>
     <h1>Teest</h1>
     <div class="x1"></div>
     <div class="x2"></div>
     <div class="x3"></div>
+    <button onclick="askPermission()"></button>
     <script>
       // test
       function handleOrientation(event) {
@@ -20,6 +21,10 @@
             const gamma = event.gamma;
             // Do stuff...
             console.log("Coods:" + alpha + " " + beta + " " + gamma)
+            // Set the innerHTML of the element with the ids x1, x2, x3 to the values of alpha, beta and gamma
+            document.querySelector(".x1").innerHTML = alpha;
+            document.querySelector(".x2").innerHTML = beta;
+            document.querySelector(".x3").innerHTML = gamma;
         }
         function askPermission() {
             alert("Running two");
