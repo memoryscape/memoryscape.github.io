@@ -8,6 +8,46 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-	<script src="index.js"></script>
+    <h1>Teest</h1>
+    <div class="x1"></div>
+    <div class="x2"></div>
+    <div class="x3"></div>
+    <script>
+      // test
+      function handleOrientation(event) {
+            const alpha = event.alpha;
+            const beta = event.beta;
+            const gamma = event.gamma;
+            // Do stuff...
+            console.log("Coods:" + alpha + " " + beta + " " + gamma)
+        }
+        function askPermission() {
+            alert("Running two");
+            console.log("testing")
+            // feature detect
+            if (typeof DeviceOrientationEvent.requestPermission === "function") {
+            DeviceOrientationEvent.requestPermission()
+                .then(permissionState => {
+                if (permissionState === "granted") {
+                    alert("Success");
+                    console.log("afd")
+                    window.addEventListener("deviceorientation", handleOrientation);
+                }else {
+                    // Handle errors here, but don't reject the Promise.
+                    console.log("Permission denied");
+                }
+            })
+            .catch(error => {
+                // This won't be triggered if no Promise rejection occurs in the above block.
+                console.log("Error occurred:", error);
+            });
+            } else {
+                console.log("something else")
+                // handle regular non iOS 13+ devices
+            }
+        }
+        // window.addEventListener('deviceorientation', handleOrientation);
+
+    </script>
   </body>
 </html>
