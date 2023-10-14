@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>HTML 5 Boilerplate</title>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+
+<body>
+  <h1>Teest</h1>
+  <div class="x1"></div>
+  <div class="x2"></div>
+  <div class="x3"></div>
+  <button onclick="askPermission()">This is a button</button>
+  <script src="/three.min.f31d536c.js"></script>
+  <script src="/panolens.min.ca714784.js"></script>
+  <script>// test
+function handleOrientation(event) {
+  var alpha = event.alpha;
+  var beta = event.beta;
+  var gamma = event.gamma;
+  // Do stuff...
+  console.log("Coods:" + alpha + " " + beta + " " + gamma);
+  // Set the innerHTML of the element with the ids x1, x2, x3 to the values of alpha, beta and gamma
+  document.querySelector(".x1").innerHTML = alpha;
+  document.querySelector(".x2").innerHTML = beta;
+  document.querySelector(".x3").innerHTML = gamma;
+}
+function askPermission() {
+  alert("Running two");
+  console.log("testing");
+  // feature detect
+  if (typeof DeviceOrientationEvent.requestPermission === "function") {
+    DeviceOrientationEvent.requestPermission().then(function (permissionState) {
+      if (permissionState === "granted") {
+        alert("Success");
+        console.log("afd");
+        window.addEventListener("deviceorientation", handleOrientation);
+      } else {
+        // Handle errors here, but don't reject the Promise.
+        console.log("Permission denied");
+      }
+    }).catch(function (error) {
+      // This won't be triggered if no Promise rejection occurs in the above block.
+      console.log("Error occurred:", error);
+    });
+  } else {
+    console.log("something else");
+    // handle regular non iOS 13+ devices
+  }
+}
+// window.addEventListener('deviceorientation', handleOrientation);</script>
+  <div class="app"></div>
+  <script src="/memoryscape.github.io.e31bb0bc.js"></script>
+</body>
+
+</html>
