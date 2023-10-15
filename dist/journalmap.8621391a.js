@@ -117,62 +117,54 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-  return bundleURL;
-}
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-  return '/';
-}
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-function updateLink(link) {
-  var newLink = link.cloneNode();
-  newLink.onload = function () {
-    link.remove();
+})({"journalmap.js":[function(require,module,exports) {
+function initMap() {
+  var mapCenter = {
+    lat: -25.363,
+    lng: 131.044
   };
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-var cssTimeout = null;
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
+  var map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 4,
+    center: mapCenter
+  });
+  var coordinatesArray = [{
+    lat: -25.363,
+    lng: 131.044,
+    label: 'Marker 1'
+  }, {
+    lat: -24.363,
+    lng: 130.044,
+    label: 'Marker 2'
   }
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-    cssTimeout = null;
-  }, 50);
+  // Add more coordinates and labels as needed
+  ];
+  var _loop = function _loop() {
+    var coordinates = _coordinatesArray[_i];
+    var marker = new google.maps.Marker({
+      position: coordinates,
+      map: map,
+      title: "Click to zoom",
+      label: coordinates.label // Set the label for the marker
+    });
+
+    marker.addListener("click", function () {
+      map.setZoom(8);
+      map.setCenter(marker.getPosition());
+    });
+  };
+  for (var _i = 0, _coordinatesArray = coordinatesArray; _i < _coordinatesArray.length; _i++) {
+    _loop();
+  }
+  map.addListener("center_changed", function () {
+    // 3 seconds after the center of the map has changed, pan back to the
+    // first marker's position.
+    window.setTimeout(function () {
+      map.panTo(coordinatesArray[0]);
+    }, 3000);
+  });
 }
-module.exports = reloadCSS;
-},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"dist/output.css":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+window.initMap = initMap;
+},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -341,5 +333,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/output.64623041.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","journalmap.js"], null)
+//# sourceMappingURL=/journalmap.8621391a.js.map
