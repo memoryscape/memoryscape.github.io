@@ -117,7 +117,62 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/three/build/three.module.js":[function(require,module,exports) {
+})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+  return bundleURL;
+}
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+  return '/';
+}
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+function updateLink(link) {
+  var newLink = link.cloneNode();
+  newLink.onload = function () {
+    link.remove();
+  };
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+var cssTimeout = null;
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+    cssTimeout = null;
+  }, 50);
+}
+module.exports = reloadCSS;
+},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"src/styles.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/three/build/three.module.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39495,22 +39550,77 @@ if (_three.REVISION != THREE_REVISION) {
  * @namespace PANOLENS
  */
 window.TWEEN = Tween;
-},{"three":"node_modules/three/build/three.module.js","process":"node_modules/process/browser.js"}],"index.js":[function(require,module,exports) {
+},{"three":"node_modules/three/build/three.module.js","process":"node_modules/process/browser.js"}],"src/index.js":[function(require,module,exports) {
+"use strict";
+
+require("./styles.css");
+console.log("Init");
 var PANOLENS = require("panolens");
 var app, panorama, viewer, infospot;
+
+// function askPermission() {
+//     alert("Running");
+//     // feature detect
+//     if (typeof DeviceOrientationEvent.requestPermission === "function") {
+//     DeviceOrientationEvent.requestPermission()
+//         .then(permissionState => {
+//         if (permissionState === "granted") {
+//             console.log("working")
+//             alert("Success");
+//             window.addEventListener("deviceorientation", () => {});
+//         }
+//         })
+//         .catch(console.error);
+//     } else {
+//         // handle regular non iOS 13+ devices
+//     }
+// }
+
+// askPermission();
+
 app = document.querySelector("#app");
+
+// const btn = document.querySelector("#gyro");
+// console.log("1")
+// console.log(btn)
+// btn.addEventListener("click", function() { DeviceMotionEvent.requestPermission(); });
+
 viewer = new PANOLENS.Viewer({
   enableReticle: false,
   container: app,
   output: "console",
   viewIndicator: true
 });
-panorama = new PANOLENS.ImagePanorama('https://firebasestorage.googleapis.com/v0/b/chalk-bot.appspot.com/o/res.jpg?alt=media&token=1b96c6ea-a503-49cb-9c17-adcc2afd5d25&_gl=1*e1f3ay*_ga*MTk4MjI3NzU5OC4xNjk0NjU0MzUz*_ga_CW55HF8NVT*MTY5NzI0NjQzNy4yMS4xLjE2OTcyNDY0NzkuMTguMC4w');
+panorama = new PANOLENS.ImagePanorama('https://firebasestorage.googleapis.com/v0/b/chalk-bot.appspot.com/o/res.jpg?alt=media&token=1b96c6ea-a503-49cb-9c17-adcc2afd5d25&_gl=1*e1f3ay*_ga*MTk4MjI3NzU5OC4xNjk0NjU0MzUz*_ga_CW55HF8NVT*MTY5NzI0NjQzNy4yMS4xLjE2OTcyNDY0NzkuMTguMC4w'
+/* The commented line `//
+"https://pchen66.github.io/Panolens/examples/asset/textures/equirectangular/tunnel.jpg"` is
+specifying the URL of an equirectangular image that will be used as the panorama for the viewer. */
+// "https://pchen66.github.io/Panolens/examples/asset/textures/equirectangular/tunnel.jpg"
+// '/Users/dhruvroongta/Downloads/a-landscape-with-hills-and-trees-hvwpfxfz.jpeg'
+//    ' http://127.0.0.1:8080/Unknown-8.jpeg'
+// 'Unknown-8.jpg'
+// 'https://images.unsplash.com/photo-1596263576925-d90d63691097?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8MzYwfGVufDB8fDB8fHww&auto=format&fit=crop&w=900&q=60'
+//"https://pchen66.github.io/Panolens/examples/asset/textures/equirectangular/tunnel.jpg"
+);
+
 infospot = new PANOLENS.Infospot(350, PANOLENS.DataImage.Info);
 infospot.position.set(0, 0, 0);
 panorama.add(infospot);
 viewer.add(panorama);
-},{"panolens":"node_modules/panolens/build/panolens.module.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+// viewer_main.enableControl(PANOLENS.CONTROLS.DEVICEORIENTATION);
+// viewer_main.enableEffect(PANOLENS.MODES.CARDBOARD);
+// viewer_main.enableControl(PANOLENS.CONTROLS.ORBIT);
+// viewer_main.enableEffect(PANOLENS.MODES.NORMAL);
+
+// document.getElementById("app").innerHTML = `
+// <h1>Hello Vanilla!</h1>
+// <div>
+//   We use Parcel to bundle this sandbox, you can find more info about Parcel
+//   <a href="https://parceljs.org" target="_blank" rel="noopener noreferrer">here</a>.
+// </div>
+// `;
+},{"./styles.css":"src/styles.css","panolens":"node_modules/panolens/build/panolens.module.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -39535,7 +39645,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44433" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38513" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
@@ -39679,5 +39789,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/memoryscape.github.io.e31bb0bc.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.js"], null)
+//# sourceMappingURL=/src.a2b27638.js.map

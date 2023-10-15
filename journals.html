@@ -5,11 +5,10 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <head>
-    <title>Parcel Sandbox</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Parcel Sandbox AAAAH</title>
     <meta charset="UTF-8" />
-    <script src="https://cdn.tailwindcss.com"></script>    
     <link href="/dist/output.css" rel="stylesheet">
-    
 </head>
 
 <body>
@@ -52,14 +51,14 @@
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            <a href="index.html" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                            <a href="index.html" class="hover:bg-gray-700 text-white rounded-md px-3 py-2 text-sm font-medium"
                                 aria-current="page">Dashboard</a>
                             <a href="input.html"
                                 class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Take Memory</a>
                             <a href="journals.html"
-                                class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">View Memories</a>
+                                class="text-gray-300 bg-gray-900 hover:text-white rounded-md px-3 py-2 text-sm font-medium">View Memories</a>
                             <a href="#"
-                                class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendar</a>
+                                class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Share Journal</a>
                         </div>
                     </div>
                 </div>
@@ -83,54 +82,37 @@
             </div>
         </div>
     </nav>
-    <!-- <button class="gyro" onclick="console.log()">Enable Gyro</button> -->
-    
+    <div class="w-2/3 sm:w-5/6 mx-auto my-auto">
+        <div class="grid grid-cols-2 px-20 justify-center mx-auto my-auto sm:grid-cols-1 md:grid-cols-2" >
+            <div class="mt-6 border-spacing-12 p-4 border-solid border-black w-60 h-60 bg-blue-100 mx-auto rounded-md hover:bg-blue-200" onclick=redirectToPage()>
+                <a class = "block text-center">
+                    Hello
+                </a>
+            </div>
+            <div class="mt-6 border-spacing-12 p-4 border-solid border-black w-60 h-60 bg-blue-100 mx-auto rounded-md hover:bg-blue-200" onclick=redirectToPage()>
+                <a class = "block text-center">
+                    Hello
+                </a>
+            </div>
+            <div class="mt-6 border-spacing-12 p-4 border-solid border-black w-60 h-60 bg-blue-100 mx-auto rounded-md hover:bg-blue-200" onclick=redirectToPage()>
+                <a class = "block text-center">
+                    Hello
+                </a>
+            </div>
+            <div class="mt-6 p-4 border border-spacing-2 border-solid border-white w-60 h-60 rounded-md mx-auto hover:bg-slate-900" onclick=redirectToPage()>
+                <a class = "block text-center">
+                    Hello
+                </a>
+            </div>
+        </div>
+    </div>
     <script>
-        function askPermission() {
-            alert("Running two");
-            console.log("testing")
-            // feature detect
-            if (typeof DeviceOrientationEvent.requestPermission === "function") {
-            DeviceOrientationEvent.requestPermission()
-                .then(permissionState => {
-                if (permissionState === "granted") {
-                    alert("Success");
-                    console.log("afd")
-                    window.addEventListener("deviceorientation", () => {});
-                }else {
-                    // Handle errors here, but don't reject the Promise.
-                    console.log("Permission denied");
-                }
-            })
-            .catch(error => {
-                // This won't be triggered if no Promise rejection occurs in the above block.
-                console.log("Error occurred:", error);
-            });
-            } else {
-                console.log("something else")
-                // handle regular non iOS 13+ devices
-                window.addEventListener('deviceorientation', handleOrientation);
-            }
-        }
-
-        function handleOrientation(event) {
-            const alpha = event.alpha;
-            const beta = event.beta;
-            const gamma = event.gamma;
-            // Do stuff...
-            console.log("Coods:" + alpha + " " + beta + " " + gamma)
+        function redirectToPage() {
+            window.location.href = "https://example.com";  // Replace with your desired URL
         }
     </script>
-
-
-    <!-- <iframe width="1200" height="700" title="Panorama Viewer" scrolling="no" src="https://renderstuff.com/tools/360-panorama-web-viewer-embed/?image=https://firebasestorage.googleapis.com/v0/b/memoryscape-59213.appspot.com/o/result.jpg?alt=media&token=e34386d4-9ba7-4164-81cb-8ce1e62ec110&_gl=1*1hemwvk*_ga*MjkyNzgzNDQuMTY5NzIzNzI3OQ..*_ga_CW55HF8NVT*MTY5NzMwMzQwNS41LjEuMTY5NzMwNDg5MS41Ni4wLjA"></iframe> -->
-    
-    <button class = "w-8 h-8 bg-red-800" onclick= "askPermission()" id="gyro"></button>
-    
-    
-    <div id="app"></div>
-    
-    <script src="src/index.js"></script>
-    
 </body>
+
+
+
 </html>

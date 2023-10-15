@@ -5,14 +5,15 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <head>
-    <title>Parcel Sandbox</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Parcel Sandbox AAAAH</title>
     <meta charset="UTF-8">
-    <script src="https://cdn.tailwindcss.com"></script>    
     <link href="/output.64623041.css" rel="stylesheet">
     
-<script src="/output.64623041.js"></script><link rel="stylesheet" href="/src.a2b27638.css"></head>
+</head>
 
 <body>
+   
     <nav class="bg-gray-800">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
@@ -46,9 +47,11 @@
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            <a href="/index.html" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Dashboard</a>
-                            <a href="/input.html" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Take Memory</a>
-                            <a href="/journals.html" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">View Memories</a>
+                            <a href="/index.html" class="hover:bg-gray-700 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Dashboard</a>
+                            <a href="/input.html" class="text-gray-300 bg-gray-900 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Take
+                                Memory</a>
+                            <a href="/journals.html" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">View
+                                Memories</a>
                             <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendar</a>
                         </div>
                     </div>
@@ -69,49 +72,55 @@
             </div>
         </div>
     </nav>
-    <!-- <button class="gyro" onclick="console.log()">Enable Gyro</button> -->
-    
-    <script>function askPermission() {
-  alert("Running two");
-  console.log("testing");
-  // feature detect
-  if (typeof DeviceOrientationEvent.requestPermission === "function") {
-    DeviceOrientationEvent.requestPermission().then(function (permissionState) {
-      if (permissionState === "granted") {
-        alert("Success");
-        console.log("afd");
-        window.addEventListener("deviceorientation", function () {});
-      } else {
-        // Handle errors here, but don't reject the Promise.
-        console.log("Permission denied");
+    <div class="flex justify-center items-center mx-auto w-fit">
+        <div class="grid grid-cols-1 mx-auto items-center justify-center w-fit">
+            <input>
+              
+            <div class="flex items-center justify-center">
+                <button class="bg-blue-500 p-2 rounded-md text-black w-72">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function handleFileUpload(event) {
+  var fileInput = event.target;
+  var files = fileInput.files;
+  if (files.length > 0) {
+    // Display all images
+    var _iterator = _createForOfIteratorHelper(files),
+      _step;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var file = _step.value;
+        displayImage(file);
       }
-    }).catch(function (error) {
-      // This won't be triggered if no Promise rejection occurs in the above block.
-      console.log("Error occurred:", error);
-    });
-  } else {
-    console.log("something else");
-    // handle regular non iOS 13+ devices
-    window.addEventListener('deviceorientation', handleOrientation);
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
   }
 }
-function handleOrientation(event) {
-  var alpha = event.alpha;
-  var beta = event.beta;
-  var gamma = event.gamma;
-  // Do stuff...
-  console.log("Coods:" + alpha + " " + beta + " " + gamma);
+function displayImage(file) {
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    var imageContainer = document.getElementById('imageContainer');
+    var imgElement = document.createElement('img');
+    imgElement.classList.add('object-cover');
+    imgElement.src = e.target.result;
+    imgElement.alt = 'Uploaded Image';
+    imageContainer.appendChild(imgElement);
+    imageContainer.classList.remove('hidden');
+  };
+  reader.readAsDataURL(file);
 }</script>
-
-
-    <!-- <iframe width="1200" height="700" title="Panorama Viewer" scrolling="no" src="https://renderstuff.com/tools/360-panorama-web-viewer-embed/?image=https://firebasestorage.googleapis.com/v0/b/memoryscape-59213.appspot.com/o/result.jpg?alt=media&token=e34386d4-9ba7-4164-81cb-8ce1e62ec110&_gl=1*1hemwvk*_ga*MjkyNzgzNDQuMTY5NzIzNzI3OQ..*_ga_CW55HF8NVT*MTY5NzMwMzQwNS41LjEuMTY5NzMwNDg5MS41Ni4wLjA"></iframe> -->
-    
-    <button class="w-8 h-8 bg-red-800" onclick="askPermission()" id="gyro"></button>
-    
-    
-    <div id="app"></div>
-    
-    <script src="/src.a2b27638.js"></script>
-    
 </body>
+
+
+
 </html>
